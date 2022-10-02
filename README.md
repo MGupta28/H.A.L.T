@@ -24,7 +24,7 @@ and get changed appropriately.
 
 ![halt1.jpg](https://i.postimg.cc/NMTZFLPq/halt1.jpg)
 
-### Trech Stacks used
+### Tech Stacks used
 ***
 
 This is an IoT enabled Traffic Management System. In this project we have used multiple Tech. stacks like:
