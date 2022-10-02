@@ -22,6 +22,8 @@ has a receiver which detects a passing
 emergency vehicle such as an ambulance
 and get changed appropriately.
 
+![halt1.jpg](https://i.postimg.cc/NMTZFLPq/halt1.jpg)
+
 ### Future Aspects 
 ***
 
