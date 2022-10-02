@@ -24,9 +24,24 @@ and get changed appropriately.
 
 ![halt1.jpg](https://i.postimg.cc/NMTZFLPq/halt1.jpg)
 
+### Data Visualisation using GRAFANA
+***
+
+Grafana is a multi-platform open source analytics and interactive visualization web application. It provides charts, graphs, and alerts for the web when connected to supported data sources.
+
+We are using it to show the data coming in from the sensors to monitor the flow of traffic in a better and visually appealing way.
+
+![image](https://user-images.githubusercontent.com/84952780/174129103-674f4962-555e-42ad-991f-1a19d06c43e4.png)
+
+![image](https://user-images.githubusercontent.com/84952780/174129139-455fc0a9-feb7-487e-b070-9e7009cf126d.png)
+
 ### Future Aspects 
 ***
 
-- Implementation of OpenCV
+- Implementation of OpenCV.
+- The solution is proposed to reduce the initial
+implementation and setup cost of the hardware
+replacing costly sensors with the pre-installed cctv
+cameras at the junction.
 
 ![OpenCV](https://user-images.githubusercontent.com/84952780/170505446-30d74291-6b9c-4d08-a657-64af858bcfe1.png)
