@@ -24,6 +24,28 @@ and get changed appropriately.
 
 ![halt1.jpg](https://i.postimg.cc/NMTZFLPq/halt1.jpg)
 
+### Trech Stacks used
+***
+
+This is an IoT enabled Traffic Management System. In this project we have used multiple Tech. stacks like:
+
+- Django
+- Grafana
+- Fusion 360
+- Prometheus
+- C++
+- Python
+- Arduino IDE
+- 
+Furthermore we have used:
+
+- RFID Sensor
+- Servo
+- IR sensor
+- LCD
+
+We even used Open cv for better detection of traffic.
+
 ### Data Visualisation using GRAFANA
 ***
 
