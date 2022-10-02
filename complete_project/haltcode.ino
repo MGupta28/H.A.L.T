@@ -1,120 +1,88 @@
-#include <LiquidCrystal_I2C.h>
-#include <Servo.h>
 #include <SPI.h>
 #include <MFRC522.h>
+#include <Servo.h>
+
+#define SS_PIN 14
+#define RST_PIN 32
+#define IRQ_PIN 2
+
+MFRC522 mfrc522(SS_PIN, RST_PIN); 
+MFRC522::MIFARE_Key key;
+void activateRec(MFRC522 mfrc522);
+void clearInt(MFRC522 mfrc522);
+
+Servo myservo; 
+int pos = 0; 
+
+int IR_1 = 13 ;
+int IR_2 = 12 ;
+
+int IR_val_1 =0 ; 
+int IR_val_2 = 0 ;
+
+int Green_led = 27 ;
+int Red_led = 26 ;
+
+int base_delay = 5000 ;
 
 
-#define ir1a 11
-#define ir1b 2
-
-#define ledr1 7
-#define ledg1 8
-
-constexpr uint8_t RST_PIN = 6;
-constexpr uint8_t SS_PIN =  10;
-int val = 0 ;
-
-Servo myservo;
-
-int base_time = 5;
-int ir_const1 = 5;
-int ir_const2 = 5;
-int A=0,B=0,C=0,D=0;
-int pos = 0 ;
-
-LiquidCrystal_I2C lcd(0x27,16,2);
+int servo_base_time = 10000 ; 
+int current_time = millis();
 
 void setup() {
 
-  SPI.begin(); 
-
-  Serial.begin(9600);
-  lcd.begin();
-  lcd.clear();
-  lcd.backlight(); 
-  lcd.setCursor(0,0);
-  lcd.setCursor(0,1);
-  lcd.print("Timer:  ");
-
-  attachInterrupt(digitalPinToInterrupt(3),rfid_sensor, CHANGE);
-
-  pinMode(ledr1,OUTPUT); // 1 red
-  pinMode(ledg1,OUTPUT); // 1 green
+  pinMode(IR_1, INPUT); 
+  pinMode(IR_2, INPUT);
+  
+  myservo.attach(4); 
+  
+  Serial.begin(115200);
+  
+  SPI.begin();          
+  mfrc522.PCD_Init(); 
+  pinMode(IRQ_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(IRQ_PIN), readCard, FALLING);
+  
+  pinMode(Green_led,OUTPUT);
+  pinMode(Red_led,OUTPUT);
+  
  
-  pinMode(ir1a,INPUT); // A ir sensor
-  pinMode(ir1b,INPUT); // B ir sensor
-
-  myservo.attach(9);
-
 }
-
-void print_lcd(int t)
- {
-  for(int i = t; i>= 0 ; i--)
-  {
-    lcd.setCursor(7,1);
-    lcd.print(i);
-    delay(1000);
-    } 
-  }
-
-
-
-void rfid_sensor()
-{
-  digitalWrite(ledr1,LOW);
-  digitalWrite(ledg1,HIGH);
-  int time_1 = 10 ;
-  Serial.print(time_1);
-
-  myservo.write(0);
-
-   print_lcd(time_1); 
-
-  myservo.write(180);
-
-
-}
-
-
-
-
 
 void loop() {
-
-  A = !digitalRead(ir1a);
-  B = !digitalRead(ir1b);
-
-  Serial.print(A);
-  Serial.print(B);
-
-  lcd.setCursor(0,0);
-  lcd.print("1A=");
-  lcd.print(A);
-  lcd.print("1B=");
-  lcd.print(B);
-
-  digitalWrite(ledr1,LOW);
-  digitalWrite(ledg1,HIGH);
-  int time_1 = base_time + Air_const1 + Bir_const2 ;
-  Serial.print(time_1);
-
-  myservo.write(0);
-
-   print_lcd(time_1); 
-
-  myservo.write(180);
+  Normal_function(base_delay);
+  if (digitalRead(IR_1) == LOW ){
+     Normal_function(base_delay+5000);
+  }
+   if (digitalRead(IR_2) == LOW ){
+     Normal_function(base_delay+10000);
+  }
+}
 
 
-  C = 0;
-  D = 0;
-
-  digitalWrite(ledg1,LOW);
-  digitalWrite(ledr1,HIGH);
-
-  int time_2 = base_time + Cir_const1 + Dir_const2;
-  Serial.print(time_2);
-  print_lcd(time_2);
+// Interupt if  rfid card read something 
+void readCard(){
+  myservo.write(90);
+  digitalWrite(Green_led , HIGH);
+  digitalWrite(Red_led , LOW);    
+}
 
 
+
+// Normal Code Working 
+void Normal_function(int delay_time ){            
+   for (pos = 0; pos <= 90; pos += 1) {            
+      myservo.write(pos);             
+      delay(15);  
+    }
+  digitalWrite(Green_led , HIGH);
+  digitalWrite(Red_led , LOW);
+  delay(delay_time) ;
+  for (pos = 90; pos >= 0; pos -= 1) { 
+    myservo.write(pos);              
+    delay(15);                      
+  }
+  digitalWrite(Green_led ,LOW);
+  digitalWrite(Red_led , HIGH);
+  delay(base_delay) ;
 }
